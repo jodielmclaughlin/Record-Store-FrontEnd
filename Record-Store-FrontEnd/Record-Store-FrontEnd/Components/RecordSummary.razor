@@ -1,0 +1,11 @@
+﻿@using Record_Store_FrontEnd.Models
+
+<div class="record-card">
+<h3>@Record.Title</h3>
+<p>Artist: @Record.Artist</p>
+</div>
+
+@code {
+    [Parameter]
+    public Record Record { get; set; }
+}

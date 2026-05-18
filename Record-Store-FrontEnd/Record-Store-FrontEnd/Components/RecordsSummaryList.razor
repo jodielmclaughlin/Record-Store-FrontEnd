@@ -1,0 +1,107 @@
+﻿@using Record_Store_FrontEnd.Models;
+
+<ul class="record-list">
+    @foreach (var record in Records)
+    {
+        <li>
+            <RecordSummary Record ="record"/>
+        </li>
+    }
+</ul>
+
+@code {
+    List<Record> Records = new List<Record>
+    {
+             new Record
+        {
+            AlbumId = 1,
+            Title = "Rumours",
+            Artist = "Fleetwood Mac",
+            ReleaseYear = 1977,
+            Genre = "Rock",
+            Stock = 12
+        },
+        new Record
+        {
+            AlbumId = 2,
+            Title = "Thriller",
+            Artist = "Michael Jackson",
+            ReleaseYear = 1982,
+            Genre = "Pop",
+            Stock = 20
+        },
+        new Record
+        {
+            AlbumId = 3,
+            Title = "Back in Black",
+            Artist = "AC/DC",
+            ReleaseYear = 1980,
+            Genre = "Hard Rock",
+            Stock = 8
+        },
+        new Record
+        {
+            AlbumId = 4,
+            Title = "21",
+            Artist = "Adele",
+            ReleaseYear = 2011,
+            Genre = "Soul",
+            Stock = 15
+        },
+        new Record
+        {
+            AlbumId = 5,
+            Title = "Abbey Road",
+            Artist = "The Beatles",
+            ReleaseYear = 1969,
+            Genre = "Rock",
+            Stock = 10
+        },
+        new Record
+        {
+            AlbumId = 6,
+            Title = "1989",
+            Artist = "Taylor Swift",
+            ReleaseYear = 2014,
+            Genre = "Pop",
+            Stock = 18
+        },
+        new Record
+        {
+            AlbumId = 7,
+            Title = "DAMN.",
+            Artist = "Kendrick Lamar",
+            ReleaseYear = 2017,
+            Genre = "Hip Hop",
+            Stock = 7
+        },
+        new Record
+        {
+            AlbumId = 8,
+            Title = "Nevermind",
+            Artist = "Nirvana",
+            ReleaseYear = 1991,
+            Genre = "Grunge",
+            Stock = 9
+        },
+        new Record
+        {
+            AlbumId = 9,
+            Title = "Future Nostalgia",
+            Artist = "Dua Lipa",
+            ReleaseYear = 2020,
+            Genre = "Disco Pop",
+            Stock = 14
+        },
+        new Record
+        {
+            AlbumId = 10,
+            Title = "The Dark Side of the Moon",
+            Artist = "Pink Floyd",
+            ReleaseYear = 1973,
+            Genre = "Progressive Rock",
+            Stock = 6
+        }
+    };
+
+}
