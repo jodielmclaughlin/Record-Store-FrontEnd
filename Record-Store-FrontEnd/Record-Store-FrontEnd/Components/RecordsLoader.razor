@@ -1,0 +1,41 @@
+﻿@using Record_Store_FrontEnd.Models
+@using System.Net.Http.Json
+
+@if (isLoading)
+{
+    <div>Loading record collection...</div>
+}
+else if(!string.IsNullOrWhiteSpace(errorMessage)){
+    <div class="error-message"> @errorMessage </div>
+}
+else if(records != null)
+{
+    <RecordsSummaryList Record="records" />
+}
+@code 
+{
+    private List<Record>? records;
+    private string? errorMessage;
+    private bool isLoading = true;
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            using var httpClient = new HttpClient();
+            httpClient.BaseAddress = new Uri("https://localhost:7093/");
+
+            records = await httpClient.GetFromJsonAsync<List<Record>>("Album");
+        }
+        catch(Exception ex)
+        {
+            errorMessage = $"Unable to load records: {ex.Message}";
+
+        }
+        finally
+        {
+            isLoading = false;
+        }
+    }
+}
+

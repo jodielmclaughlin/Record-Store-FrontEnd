@@ -1,15 +1,17 @@
 ﻿@using Record_Store_FrontEnd.Models;
 
-<ul class="record-list">
-    @foreach (var record in Records)
+<div class="record-grid">
+    @foreach (var record in Record)
     {
-        <li>
+        
             <RecordSummary Record ="record"/>
-        </li>
+       
     }
-</ul>
+</div>
 
 @code {
+    [Parameter]
+    public List<Record> Record { get; set; }
     List<Record> Records = new List<Record>
     {
              new Record
