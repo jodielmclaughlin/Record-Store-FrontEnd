@@ -1,9 +1,20 @@
 html, body {
-    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-family: "Texturina", serif;
+    font-optical-sizing: auto;
+    font-weight: 100;
+    font-style: normal;
+    
 }
-
+.texturina-font {
+    font-family: "Texturina", serif;
+    font-optical-sizing: auto;
+    font-weight: 100;
+    font-style: normal;
+    color: white
+}
 a, .btn-link {
-    color: #006bb7;
+    color: white;
+    padding: 5px
 }
 
 .btn-primary {
@@ -49,14 +60,57 @@ h1:focus {
 .darker-border-checkbox.form-check-input {
     border-color: #929292;
 }
-.record-card {
-    border: 1px solid #ccc;
-    padding: 1rem;
-    margin-bottom: 1rem;
-    border-radius: 8px;
-}
+/*.record-card {
+    display: grid;
+    grid-template-columns: auto auto auto;
+    padding: 10px;
+}*/
 
 .record-list {
     list-style: none;
     padding: 0;
+}
+.record-grid {
+    display: grid;
+    grid-template-columns: auto auto auto;
+    padding: 10px;
+    font-size: 20px;
+}
+.navigation {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: flex-end;
+    list-style: none;
+    margin: 0px 0px 0px 20px;
+    background: black;
+    font-size: 30px;
+    text-decoration: none;
+    display: block;
+    padding: 20px;
+    color: white;
+}
+    .navigation href {
+        color: white;
+    }
+    .navigation href:hover {
+        color: white;
+    }
+.default-header {
+    display: flex;
+    flex-flow: row wrap;
+    background-color: black;
+    justify-content: space-between;
+    color: white
+}
+.default-welcome {
+    color: black;
+    display: flex;
+    justify-content: center;
+}
+#store-name{
+    padding:20px
+}
+.default-footer {
+    display: flex;
+    justify-content: center;
 }
