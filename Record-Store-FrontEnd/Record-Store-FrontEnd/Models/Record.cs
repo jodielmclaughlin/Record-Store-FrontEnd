@@ -7,6 +7,8 @@ namespace Record_Store_FrontEnd.Models
         public int AlbumId { get; set; }
         [Required]
         public string Title { get; set; }
+    
+        public string ImgUrl { get; set; } 
         [Required]
         public string Artist { get; set; }
         [Range(1900, 2100)]

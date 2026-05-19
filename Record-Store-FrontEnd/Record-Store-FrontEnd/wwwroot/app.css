@@ -114,3 +114,18 @@ h1:focus {
     display: flex;
     justify-content: center;
 }
+.about-grid {
+    display: grid;
+    grid-template-columns: auto auto;
+    padding: 10px;
+    font-size: 20px;
+    place-items:center;
+}
+#about-info{
+    padding:20px;
+    text-align:center;
+}
+#about-img {
+    border-radius: 50%;
+    border: 3px solid black;
+}
