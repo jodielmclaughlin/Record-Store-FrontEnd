@@ -1,7 +1,22 @@
-﻿@page "/"
+﻿@using Record_Store_FrontEnd.Models
+@page "/"
 
 <PageTitle>Home</PageTitle>
 
-<RecordsLoader />
+@* <RecordsLoader /> *@
+@* <h1>Record Details</h1>
+<RecordDetails singleRecord="record"/> *@
 
 
+@code{
+    // private Record record = new()
+    // {
+    //     AlbumId = 7,
+    //     Title = "1989",
+    //     Artist = "Taylor Swift",
+    //     Genre = "Pop",
+    //     ReleaseYear = 2014,
+    //     Stock = 18,
+    //     ImgUrl = "1989.jpg"
+    // };
+}

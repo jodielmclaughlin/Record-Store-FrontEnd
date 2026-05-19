@@ -1,0 +1,110 @@
+﻿@using Record_Store_FrontEnd.Models
+@using Microsoft.AspNetCore.Components.Forms
+@page "/Albums/{AlbumId:int}/edit"
+@rendermode InteractiveServer
+
+<PageTitle>Record Details</PageTitle>
+
+
+<div class="record-details">
+    <h2>Edit Record: </h2>
+        
+    <div class="form-group">
+        <label>Title</label>
+        <InputText @bind-Value="editableRecord.Title" />
+    </div>
+    <div class="form-group">
+        <label>Artist</label>
+        <InputText @bind-Value="editableRecord.Artist" />
+    </div>
+    <div class="form-group">
+        <label>Genre</label>
+        <InputText @bind-Value="editableRecord.Genre" />
+    </div>
+    <div class="form-group">
+        <label>Release Year</label>
+        <InputNumber @bind-Value="editableRecord.ReleaseYear" />
+    </div>
+    <div class="form-group">
+        <label>Album Cover</label>
+        <InputText @bind-Value="editableRecord.ImgUrl" />
+    </div>
+    <div class="form-group">
+        <label>Stock</label>
+        <InputNumber @bind-Value="editableRecord.Stock" />
+    </div>
+    <p>Editable title: @editableRecord.Title</p>
+    <button id="save-changes-button" type="button" @onclick="SaveChanges">Save Changes</button>
+    <p>Updated title: @updatedRecord?.Title</p>
+</div>
+
+@if (updatedRecord != null)
+{
+    <div class="updated-record-preview">
+        <h3>Updated Record Preview</h3>
+        <p><strong>Title:</strong> @updatedRecord.Title</p>
+        <p><strong>Artist: </strong>@updatedRecord.Artist</p>
+        <p><strong>Genre: </strong>@updatedRecord.Genre</p>
+        <p><strong>Year: </strong>@updatedRecord.ReleaseYear</p>
+        <p><strong>Stock: </strong>@updatedRecord.Stock</p>
+
+        <img src="@updatedRecord.ImgUrl"
+             alt="@updatedRecord.Title"
+             class="album-image" width="150" height="150"/>
+    </div>
+}
+
+
+@code {
+    [Parameter]
+    public Record? Record { get; set; }
+    [Parameter]
+    public int AlbumId { get; set; }
+    private Record record = new()
+     {
+         AlbumId = 7,
+         Title = "1989",
+         Artist = "Taylor Swift",
+         Genre = "Pop",
+         ReleaseYear = 2014,
+         Stock = 18,
+         ImgUrl = "1989.jpg"
+     };
+
+    private Record editableRecord = new();
+
+    private Record? updatedRecord = new();
+
+    protected override void OnParametersSet()
+    {
+        if (record != null)
+        {
+            editableRecord = new Record
+                {
+                    AlbumId = record.AlbumId,
+                    Title = record.Title,
+                    Artist = record.Artist,
+                    Genre = record.Genre,
+                    ReleaseYear = record.ReleaseYear,
+                    Stock = record.Stock,
+                    ImgUrl = record.ImgUrl
+                };
+        }
+    }
+
+    private void SaveChanges()
+    {
+        Console.WriteLine("BUTTON CLICKED");
+        updatedRecord = new Record
+        {
+            AlbumId = editableRecord.AlbumId,
+            Title = editableRecord.Title,
+            Artist = editableRecord.Artist,
+            Genre = editableRecord.Genre,
+            ReleaseYear = editableRecord.ReleaseYear,
+            Stock = editableRecord.Stock,
+            ImgUrl = editableRecord.ImgUrl
+        };
+    }
+
+}

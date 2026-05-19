@@ -4,7 +4,9 @@
     <dt>@Record.Title</dt>
     <img src="@Record.ImgUrl" width="150" height="150"/>
     <dd>Artist: @Record.Artist</dd>
-
+    <NavLink href="@($"/Albums/{Record.AlbumId}/edit")">
+        <button id="edit-btn">Edit</button>
+    </NavLink>
 </dl>
 
 @code {
