@@ -1,110 +1,112 @@
 ﻿@using Record_Store_FrontEnd.Models
 @using Microsoft.AspNetCore.Components.Forms
+@using System.ComponentModel.DataAnnotations
+@inject HttpClient httpClient;
 @page "/Albums/{AlbumId:int}/edit"
 @rendermode InteractiveServer
 
 <PageTitle>Record Details</PageTitle>
 
-
+<EditForm Model="@updatedAlbumRequest" OnSubmit=@SaveChanges>
+    <DataAnnotationsValidator/>
 <div class="record-details">
     <h2>Edit Record: </h2>
-        
-    <div class="form-group">
+        <div class="form-group">
         <label>Title</label>
-        <InputText @bind-Value="editableRecord.Title" />
+            <InputText @bind-Value="updatedAlbumRequest.Title" />
+            <ValidationMessage For="@(() => updatedAlbumRequest.Title)" />
     </div>
     <div class="form-group">
         <label>Artist</label>
-        <InputText @bind-Value="editableRecord.Artist" />
+            <InputText @bind-Value="updatedAlbumRequest.Artist" />
+            <ValidationMessage For="@(() => updatedAlbumRequest.Artist)" />
     </div>
     <div class="form-group">
         <label>Genre</label>
-        <InputText @bind-Value="editableRecord.Genre" />
+            <InputText @bind-Value="updatedAlbumRequest.Genre" />
+            <ValidationMessage For="@(() => updatedAlbumRequest.Genre)" />
     </div>
     <div class="form-group">
         <label>Release Year</label>
-        <InputNumber @bind-Value="editableRecord.ReleaseYear" />
+            <InputNumber @bind-Value="updatedAlbumRequest.ReleaseYear" />
     </div>
     <div class="form-group">
         <label>Album Cover</label>
-        <InputText @bind-Value="editableRecord.ImgUrl" />
+            <InputText @bind-Value="updatedAlbumRequest.ImgUrl" />
     </div>
     <div class="form-group">
         <label>Stock</label>
-        <InputNumber @bind-Value="editableRecord.Stock" />
+            <InputNumber @bind-Value="updatedAlbumRequest.Stock" />
     </div>
-    <p>Editable title: @editableRecord.Title</p>
-    <button id="save-changes-button" type="button" @onclick="SaveChanges">Save Changes</button>
-    <p>Updated title: @updatedRecord?.Title</p>
+    
+    <button id="save-changes-button" type="submit">Save Changes</button>
+    
 </div>
+</EditForm>
 
-@if (updatedRecord != null)
+@if (!string.IsNullOrWhiteSpace(successMessage))
 {
-    <div class="updated-record-preview">
-        <h3>Updated Record Preview</h3>
-        <p><strong>Title:</strong> @updatedRecord.Title</p>
-        <p><strong>Artist: </strong>@updatedRecord.Artist</p>
-        <p><strong>Genre: </strong>@updatedRecord.Genre</p>
-        <p><strong>Year: </strong>@updatedRecord.ReleaseYear</p>
-        <p><strong>Stock: </strong>@updatedRecord.Stock</p>
-
-        <img src="@updatedRecord.ImgUrl"
-             alt="@updatedRecord.Title"
-             class="album-image" width="150" height="150"/>
-    </div>
+    <p class="success-message">
+        @successMessage
+    </p>
+}
+@if (!string.IsNullOrWhiteSpace(errorMessage))
+{
+    <p class="error-message">
+        @errorMessage
+    </p>
 }
 
 
 @code {
     [Parameter]
-    public Record? Record { get; set; }
+    public UpdatedAlbumRequest updatedAlbumRequest { get; set; } = new();
+
     [Parameter]
     public int AlbumId { get; set; }
-    private Record record = new()
-     {
-         AlbumId = 7,
-         Title = "1989",
-         Artist = "Taylor Swift",
-         Genre = "Pop",
-         ReleaseYear = 2014,
-         Stock = 18,
-         ImgUrl = "1989.jpg"
-     };
 
-    private Record editableRecord = new();
+    private string successMessage;
+    private string errorMessage;
 
-    private Record? updatedRecord = new();
-
-    protected override void OnParametersSet()
+    protected override async Task OnInitializedAsync()
     {
-        if (record != null)
+        var album = await httpClient.GetFromJsonAsync<UpdatedAlbumRequest>($"Album/{AlbumId}");
+        Console.WriteLine(album);
+        if(album != null)
         {
-            editableRecord = new Record
+            updatedAlbumRequest = new UpdatedAlbumRequest
                 {
-                    AlbumId = record.AlbumId,
-                    Title = record.Title,
-                    Artist = record.Artist,
-                    Genre = record.Genre,
-                    ReleaseYear = record.ReleaseYear,
-                    Stock = record.Stock,
-                    ImgUrl = record.ImgUrl
+                    Title = album.Title,
+                    Artist = album.Artist,
+                    Genre = album.Genre,
+                    ReleaseYear = album.ReleaseYear,
+                    Stock = album.Stock,
+                    ImgUrl = album.ImgUrl
                 };
         }
     }
 
-    private void SaveChanges()
+    private async Task SaveChanges()
     {
-        Console.WriteLine("BUTTON CLICKED");
-        updatedRecord = new Record
+        try
         {
-            AlbumId = editableRecord.AlbumId,
-            Title = editableRecord.Title,
-            Artist = editableRecord.Artist,
-            Genre = editableRecord.Genre,
-            ReleaseYear = editableRecord.ReleaseYear,
-            Stock = editableRecord.Stock,
-            ImgUrl = editableRecord.ImgUrl
-        };
+            var response = await httpClient.PutAsJsonAsync<UpdatedAlbumRequest>($"Album/{AlbumId}", updatedAlbumRequest);
+            if (response.IsSuccessStatusCode)
+            {
+                var updatedRecord = await response.Content.ReadFromJsonAsync<UpdatedAlbumRequest>();
+                successMessage = "Record updated successfully!";
+                errorMessage = null;
+            }
+            else
+            {
+                errorMessage = $"Failed to update record: {response.StatusCode}";
+                successMessage = null;
+            }
+        }
+        catch(Exception ex)
+        {
+            Console.WriteLine(ex.Message);
+        }
     }
 
 }
