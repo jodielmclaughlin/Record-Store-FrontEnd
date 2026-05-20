@@ -1,12 +1,16 @@
 ﻿@using Record_Store_FrontEnd.Models;
 
+<div class="all-albums">
+    <h2>Browse Albums</h2>
 <div class="record-grid">
+    
     @foreach (var record in Record)
     {
         
             <RecordSummary Record ="record"/>
        
     }
+</div>
 </div>
 
 @code {

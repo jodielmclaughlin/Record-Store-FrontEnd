@@ -7,42 +7,58 @@
 
 <PageTitle>Record Details</PageTitle>
 
-<EditForm Model="@updatedAlbumRequest" OnSubmit=@SaveChanges>
-    <DataAnnotationsValidator/>
-<div class="record-details">
-    <h2>Edit Record: </h2>
+<div class="edit-grid">
+    
+    <div class="edit-album-card">
+        <img src="@updatedAlbumRequest.ImgUrl" width="200" height="200"/>
+        <h3>@updatedAlbumRequest.Title</h3>
+        <h4>@updatedAlbumRequest.Artist</h4>
+        <h4>@updatedAlbumRequest.Genre</h4>
+        <h4>@updatedAlbumRequest.ReleaseYear</h4>
+        <h4>@updatedAlbumRequest.Stock</h4>
+    </div>
+
+    <div class="record-details">
+
+        <EditForm Model="@updatedAlbumRequest" OnValidSubmit=@SaveChanges>
+        <DataAnnotationsValidator/>
+
+
+        <h2>Edit Record: </h2>
+            <div class="form-group">
+            <label>Title</label>
+                <InputText @bind-Value="updatedAlbumRequest.Title" />
+                <ValidationMessage For="@(() => updatedAlbumRequest.Title)" />
+        </div>
         <div class="form-group">
-        <label>Title</label>
-            <InputText @bind-Value="updatedAlbumRequest.Title" />
-            <ValidationMessage For="@(() => updatedAlbumRequest.Title)" />
-    </div>
-    <div class="form-group">
-        <label>Artist</label>
-            <InputText @bind-Value="updatedAlbumRequest.Artist" />
-            <ValidationMessage For="@(() => updatedAlbumRequest.Artist)" />
-    </div>
-    <div class="form-group">
-        <label>Genre</label>
-            <InputText @bind-Value="updatedAlbumRequest.Genre" />
-            <ValidationMessage For="@(() => updatedAlbumRequest.Genre)" />
-    </div>
-    <div class="form-group">
-        <label>Release Year</label>
-            <InputNumber @bind-Value="updatedAlbumRequest.ReleaseYear" />
-    </div>
-    <div class="form-group">
-        <label>Album Cover</label>
-            <InputText @bind-Value="updatedAlbumRequest.ImgUrl" />
-    </div>
-    <div class="form-group">
-        <label>Stock</label>
-            <InputNumber @bind-Value="updatedAlbumRequest.Stock" />
-    </div>
+            <label>Artist</label>
+                <InputText @bind-Value="updatedAlbumRequest.Artist" />
+                <ValidationMessage For="@(() => updatedAlbumRequest.Artist)" />
+        </div>
+        <div class="form-group">
+            <label>Genre</label>
+                <InputText @bind-Value="updatedAlbumRequest.Genre" />
+                <ValidationMessage For="@(() => updatedAlbumRequest.Genre)" />
+        </div>
+        <div class="form-group">
+            <label>Release Year</label>
+                <InputNumber @bind-Value="updatedAlbumRequest.ReleaseYear" />
+        </div>
+        <div class="form-group">
+            <label>Album Cover</label>
+                <InputText @bind-Value="updatedAlbumRequest.ImgUrl" />
+        </div>
+        <div class="form-group">
+            <label>Stock</label>
+                <InputNumber @bind-Value="updatedAlbumRequest.Stock" />
+        </div>
     
-    <button id="save-changes-button" type="submit">Save Changes</button>
+        <button id="save-changes-button" type="submit">Save Changes</button>
     
+
+        </EditForm>
+    </div>
 </div>
-</EditForm>
 
 @if (!string.IsNullOrWhiteSpace(successMessage))
 {
