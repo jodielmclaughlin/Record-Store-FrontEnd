@@ -165,8 +165,3 @@ This project demonstrates:
 - Separation of concerns
 - Responsive frontend design principles
 
----
-
-## Author
-
-Created as part of the Northcoders Software Development Programme.
